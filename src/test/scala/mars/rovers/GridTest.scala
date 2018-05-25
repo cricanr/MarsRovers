@@ -1,7 +1,5 @@
 package mars.rovers
 
-import mars.rovers.Orientation.N
-import mars.rovers.RoverCommand.{L, M}
 import org.scalatest.{Matchers, WordSpec}
 
 class GridTest extends WordSpec with Matchers {

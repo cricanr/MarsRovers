@@ -1,7 +1,5 @@
 package mars.rovers
 
-import scala.util.Try
-
 object RoverController {
 
   def main(args: Array[String]): Unit = {
@@ -20,5 +18,10 @@ object RoverController {
     val secondRoverCoordinatesStr = scala.io.StdIn.readLine()
     val secondRoverMovesStr = scala.io.StdIn.readLine()
 
+    val maybeGrid = Grid.apply(gridSizeStr)
+    val maybeFirstRover = Rover.apply(firstRoverCoordinatesStr)
+    val firstRoverCommands = Command.apply(firstRoverMovesStr)
+    val maybeSecondRover = Rover.apply(secondRoverCoordinatesStr)
+    val secondRoverCommands = Command.apply(secondRoverMovesStr)
   }
 }

@@ -6,6 +6,16 @@ import Orientation._
 
 class RoverSpec extends WordSpec with Matchers {
   "The Rover" when {
+    "calling apply method with input" should {
+      "return a new rover" in {
+        val input = "1 2 N"
+        val expectedRover = Rover(Coordinates(1, 2), N)
+        val destinationRover = Rover(input)
+
+        destinationRover shouldEqual Some(expectedRover)
+      }
+    }
+
     "calling move method" should {
       "return new position" in {
         val initialRover = Rover(Coordinates(1, 2), N)

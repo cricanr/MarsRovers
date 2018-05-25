@@ -10,8 +10,7 @@ object Grid {
     maybeSizes.collect {
       case sizes if sizes.length == 2 =>
         val maybeRow = Try(sizes.head.toInt).toOption
-        val maybeColumn = Try(sizes
-        (1).toInt).toOption
+        val maybeColumn = Try(sizes(1).toInt).toOption
 
         val a: Option[Grid] = for {
           row <- maybeRow
