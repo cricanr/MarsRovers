@@ -85,11 +85,17 @@ case class Rover(coordinates: Coordinates, orientation: Orientation) {
   }
 
   def move(command: Command): Rover = {
+    command.commands.zipWithIndex
     if (command.commands.size == 1)
       decideMove(command.commands.head)
     else
       // TODO: implement me
-      command.commands.foldLeft(decideMove(command.commands.head)) { (acc, cmd) => acc.decideMove(cmd) }
+      command.commands.zipWithIndex.foldLeft(decideMove(command.commands.head)) { (acc, cmd) =>
+        if (cmd._2 != 0)
+          acc.decideMove(cmd._1)
+        else
+          acc
+      }
   }
 }
 

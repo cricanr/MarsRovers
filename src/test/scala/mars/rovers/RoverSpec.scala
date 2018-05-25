@@ -1,8 +1,8 @@
 package mars.rovers
 
+import mars.rovers.Orientation._
 import mars.rovers.RoverCommand._
 import org.scalatest.{Matchers, WordSpec}
-import Orientation._
 
 class RoverSpec extends WordSpec with Matchers {
   "The Rover" when {
