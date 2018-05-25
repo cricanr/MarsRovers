@@ -15,7 +15,7 @@ object RoverCommand extends Enumeration {
 }
 
 import mars.rovers.Orientation.{Orientation, _}
-import mars.rovers.RoverCommand.RoverCommand
+import mars.rovers.RoverCommand.{L, M, R, RoverCommand}
 
 import scala.util.Try
 
@@ -34,6 +34,17 @@ object Command {
 }
 
 case class Rover(coordinates: Coordinates, orientation: Orientation) {
+  private def decideMove(roverCommand: RoverCommand): Rover = {
+    roverCommand match {
+      case M =>
+        singleMove
+      case L =>
+        rotateLeft
+      case R =>
+        rotateRight
+    }
+  }
+
   private def singleMove = {
     orientation match {
       case N =>
@@ -47,7 +58,7 @@ case class Rover(coordinates: Coordinates, orientation: Orientation) {
     }
   }
 
-  private def rotateLeft(): Rover = {
+  private def rotateLeft: Rover = {
     orientation match {
       case N =>
         Rover(coordinates, W)
@@ -60,7 +71,7 @@ case class Rover(coordinates: Coordinates, orientation: Orientation) {
     }
   }
 
-  def rotateRight(): Rover = {
+  def rotateRight: Rover = {
     orientation match {
       case N =>
         Rover(coordinates, E)
@@ -74,15 +85,11 @@ case class Rover(coordinates: Coordinates, orientation: Orientation) {
   }
 
   def move(command: Command): Rover = {
-    import RoverCommand._
-    command match {
-      case Command(Seq(M)) =>
-        singleMove
-      case Command(Seq(L)) =>
-        rotateLeft()
-      case Command(Seq(R)) =>
-        rotateRight()
-    }
+    if (command.commands.size == 1)
+      decideMove(command.commands.head)
+    else
+      // TODO: implement me
+      command.commands.foldLeft(decideMove(command.commands.head)) { (acc, cmd) => acc.decideMove(cmd) }
   }
 }
 
