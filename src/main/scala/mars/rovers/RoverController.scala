@@ -24,10 +24,12 @@ object RoverController {
     val maybeSecondRover = Rover.apply(secondRoverCoordinatesStr)
     val secondRoverCommands = Command.apply(secondRoverMovesStr)
 
-    println("Destination positions of drone 1 & drone 2 is: ")
-    val destinationRover1 = maybeFirstRover.map(firstRover => firstRover.move(firstRoverCommands))
-    destinationRover1.foreach(destinationRover1 => print(s"${destinationRover1.coordinates.x} ${destinationRover1.coordinates.y} ${destinationRover1.orientation} "))
-    val destinationRover2  = maybeSecondRover.map(secondRover => secondRover.move(secondRoverCommands))
-    destinationRover2.foreach(destinationRover2 => println(s"${destinationRover2.coordinates.x} ${destinationRover2.coordinates.y} ${destinationRover2.orientation}"))
+    maybeGrid.foreach { grid =>
+      println("Destination positions of drone 1 & drone 2 is: ")
+      val destinationRover1 = maybeFirstRover.map(firstRover => firstRover.move(firstRoverCommands, grid))
+      destinationRover1.foreach(destinationRover1 => print(s"${destinationRover1.coordinates.x} ${destinationRover1.coordinates.y} ${destinationRover1.orientation} "))
+      val destinationRover2  = maybeSecondRover.map(secondRover => secondRover.move(secondRoverCommands, grid))
+      destinationRover2.foreach(destinationRover2 => println(s"${destinationRover2.coordinates.x} ${destinationRover2.coordinates.y} ${destinationRover2.orientation}"))
+    }
   }
 }

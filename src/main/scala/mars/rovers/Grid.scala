@@ -12,12 +12,10 @@ object Grid {
         val maybeRow = Try(sizes.head.toInt).toOption
         val maybeColumn = Try(sizes(1).toInt).toOption
 
-        val a: Option[Grid] = for {
+        for {
           row <- maybeRow
           column <- maybeColumn
         } yield Grid(row, column)
-
-        a
       case _ => None
     }.flatten
   }

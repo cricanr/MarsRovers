@@ -34,10 +34,10 @@ object Command {
 }
 
 case class Rover(coordinates: Coordinates, orientation: Orientation) {
-  private def decideMove(roverCommand: RoverCommand): Rover = {
+  private def decideMove(roverCommand: RoverCommand, grid: Grid): Rover = {
     roverCommand match {
       case M =>
-        singleMove
+        singleMove(grid)
       case L =>
         rotateLeft
       case R =>
@@ -45,17 +45,32 @@ case class Rover(coordinates: Coordinates, orientation: Orientation) {
     }
   }
 
-  private def singleMove = {
+  private def withinBoundaries(grid: Grid): Boolean = {
     orientation match {
       case N =>
-        Rover(Coordinates(coordinates.x, coordinates.y + 1), orientation)
+        coordinates.y + 1 <= grid.columns
       case S =>
-        Rover(Coordinates(coordinates.x, coordinates.y - 1), orientation)
+        coordinates.y - 1 >= 0
       case E =>
-        Rover(Coordinates(coordinates.x + 1, coordinates.y), orientation)
+        coordinates.x + 1 <= grid.rows
       case W =>
-        Rover(Coordinates(coordinates.x - 1, coordinates.y), orientation)
+        coordinates.x - 1 >= 0
     }
+  }
+
+  private def singleMove(grid: Grid) = {
+    if (withinBoundaries(grid))
+      orientation match {
+        case N =>
+          Rover(Coordinates(coordinates.x, coordinates.y + 1), orientation)
+        case S =>
+          Rover(Coordinates(coordinates.x, coordinates.y - 1), orientation)
+        case E =>
+          Rover(Coordinates(coordinates.x + 1, coordinates.y), orientation)
+        case W =>
+          Rover(Coordinates(coordinates.x - 1, coordinates.y), orientation)
+      }
+    else throw new OutsideGridMoveException
   }
 
   private def rotateLeft: Rover = {
@@ -84,19 +99,11 @@ case class Rover(coordinates: Coordinates, orientation: Orientation) {
     }
   }
 
-  def move(command: Command): Rover = {
-    command.commands.zipWithIndex
+  def move(command: Command, grid: Grid): Rover =
     if (command.commands.size == 1)
-      decideMove(command.commands.head)
+      decideMove(command.commands.head, grid)
     else
-      // TODO: implement me
-      command.commands.zipWithIndex.foldLeft(decideMove(command.commands.head)) { (acc, cmd) =>
-        if (cmd._2 != 0)
-          acc.decideMove(cmd._1)
-        else
-          acc
-      }
-  }
+      command.commands.zipWithIndex.foldLeft(decideMove(command.commands.head, grid))((acc, cmd) => if (cmd._2 != 0) acc.decideMove(cmd._1, grid) else acc)
 }
 
 object Rover {
