@@ -27,9 +27,9 @@ class RoverSpec extends WordSpec with Matchers {
     }
 
     "calling move when North oriented" should {
-      "increment x axis position" in {
+      "increment y axis position" in {
         val initialRover = Rover(Coordinates(1, 2), N)
-        val expectedRover = Rover(Coordinates(2, 2), N)
+        val expectedRover = Rover(Coordinates(1, 3), N)
         val destinationRover = initialRover.move(Command(Seq(M)))
 
         destinationRover shouldEqual expectedRover
