@@ -48,13 +48,13 @@ case class Rover(coordinates: Coordinates, orientation: Orientation) {
   private def singleMove = {
     orientation match {
       case N =>
-        Rover(Coordinates(coordinates.x + 1, coordinates.y), orientation)
-      case S =>
-        Rover(Coordinates(coordinates.x - 1, coordinates.y), orientation)
-      case E =>
         Rover(Coordinates(coordinates.x, coordinates.y + 1), orientation)
-      case W =>
+      case S =>
         Rover(Coordinates(coordinates.x, coordinates.y - 1), orientation)
+      case E =>
+        Rover(Coordinates(coordinates.x + 1, coordinates.y), orientation)
+      case W =>
+        Rover(Coordinates(coordinates.x - 1, coordinates.y), orientation)
     }
   }
 
