@@ -24,42 +24,15 @@ The output for each rover should be its final co-ordinates and heading.
 Test Input: 5 5 1 2 N LMLMLMLMM 3 3 E MMRMMRMRRM
 Expected Output: 1 3 N 5 1 E
 
-##Assumptions: *A rover can not continue off the limits of the plateau
-
-##My problem definition:
-
-Lets assume that we deployed a robot at position X,Y which is the same as to say (0,0) North, here below are the detail scenarios that could happen:
-
-Increment ++Y => Any move from point (X,Y) and the rover facing towards North
-Decremement --Y => Any move from point (X,Y) and the rover facing towards South
-Increment ++X => Any move from point (X,Y) and the rover facing towards East
-Decrement --X => Any move from point (X,Y) and the rover facing towards West
-I am visualizing a XY graph where Y has the North and South coordinates and X has the East and West coordinates
-###Important Assumption:
-
-####*A rover can't continue off the limits of the plateau 
-####*If we pass a command string "MM" for a rover that is positioned at X,Y(0,0) facing North. Then the final destination of the rover will be X,Y(0,2)
+##Assumptions: *A rover can not continue off the limits of the grid 
 
 Breakdown to code following the Object Oriented Way:
 
-What are the states (classes) that I am going to use?
+What are the classes that I am going to use?
 Rover
-Plateau
-Navigation_controller
+Orientation
+Coordinates
+Grid
+Command
+RoverController
 What are the behaviors (methods) for each state?
-
-Rover has the following behaviours:
-
-Move
-Single_move(move)
-Rotate_left
-Rotate_right
-Rotate_forward
-Initial_position
-Ending_position
-Within_limits?
-Outside_grid(inst)
-Plateau has the following behavious:
-
-Add_rover(rover)
-Within_limits(pos_a, pos_b)
