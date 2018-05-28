@@ -36,3 +36,9 @@ Grid
 Command
 RoverController
 What are the behaviors (methods) for each state?
+
+###Compiling, running app & tests
+```bash
+sbt clean compile test
+sbt run
+```
